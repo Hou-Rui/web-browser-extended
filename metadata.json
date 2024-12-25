@@ -1,0 +1,23 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Name": "Web Browser Extended",
+        "Name[zh_CN]": "网页浏览器加强",
+        "Authors": [
+            {
+                "Email": "houruinus@gmail.com",
+                "Name": "Hou Rui",
+                "Name[x-test]": "xxMikhail Ivchenkoxx"
+            }
+        ],
+        "BugReportUrl": "https://bugs.kde.org/enter_bug.cgi?product=kdeplasma-addons&component=Web Browser",
+        "Category": "Online Services",
+        "Description": "Add a webpage on your desktop. Supports more features than the official applet.",
+        "Description[zh_CN]": "添加网页到您的桌面。比官方版本支持更多功能。",
+        "Icon": "applications-internet",
+        "Id": "com.hourui.plasma.webbrowser",
+        "License": "GPL-2.0+",
+        "Website": "https://kde.org/plasma-desktop"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
