@@ -18,6 +18,12 @@ Bug reports and pull requests are welcomed.
 
   Currently, a browser profile directory is located at `~/.local/share/plasmashell/QtWebEngine/<profile_name>`. It will **not** be deleted when not needed anymore (there is no way to delete a directory using only QML). You need to clean the abandoned profiles manually if you change the profile name or remove an instance of this applet.
 
+- **Optional web engine settings**, include:
+
+  - **An option to allow JavaScript on the web page to access system clipboard** (default off). Note that unrestricted clipboard access is a potential security concern, so use this option with care.
+
+  - **Force all web pages to render in a dark theme** (default off). This option is equivalent to `chrome://flags/#enable-force-dark` in Chromium. Even if the web page does not support dark mode, this option will force a dark theme onto it.
+
 ## Installation
 
 Download the latest release `web-browser-extended.plasmoid`. Run `kpackagetool6 --type Plasma/Applet --install web-browser-extended.plasmoid` to install the applet.
