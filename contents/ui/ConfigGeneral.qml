@@ -14,6 +14,8 @@ KCM.SimpleKCM {
     property alias cfg_defaultUrl: defaultUrl.text
     property alias cfg_usePersistentProfile: usePersistentProfile.checked
     property alias cfg_persistentProfile: persistentProfile.text
+    property alias cfg_canAccessClipboard: canAccessClipboard.checked
+    property alias cfg_forceDarkMode: forceDarkMode.checked
 
     Kirigami.FormLayout {
         QQC2.ButtonGroup { id: defaultUrlGroup }
@@ -160,6 +162,21 @@ KCM.SimpleKCM {
             placeholderText: i18nc("@info", "Persistent profile name")
             enabled: usePersistentProfile.checked
             Accessible.description: text.length > 0 ? text : i18nc("@info", "Persistent profile name")
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
+        }
+
+        QQC2.CheckBox {
+            id: canAccessClipboard
+            Kirigami.FormData.label: i18nc("@title:group", "Web Settings:")
+            text: i18nc("@option:check", "Allow JavaScript to access system clipboard")
+        }
+
+        QQC2.CheckBox {
+            id: forceDarkMode
+            text: i18nc("@option:check", "Render web page using a dark theme")
         }
     }
 }

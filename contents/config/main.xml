@@ -45,5 +45,11 @@
     <entry name="persistentProfile" type="String">
       <default>Default</default>
     </entry>
+    <entry name="canAccessClipboard" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="forceDarkMode" type="Bool">
+      <default>false</default>
+    </entry>
   </group>
 </kcfg>

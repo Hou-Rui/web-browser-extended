@@ -209,6 +209,11 @@ PlasmoidItem {
                     url = plasmoid.configuration.useDefaultUrl ? plasmoid.configuration.defaultUrl : plasmoid.configuration.url;
                 }
 
+                settings {
+                    javascriptCanAccessClipboard: plasmoid.configuration.canAccessClipboard
+                    forceDarkMode: plasmoid.configuration.forceDarkMode
+                }
+
                 profile: WebEngineProfile {
                     id: persistentProfile
                     storageName: plasmoid.configuration.persistentProfile
