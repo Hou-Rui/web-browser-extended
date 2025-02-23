@@ -24,6 +24,8 @@ Bug reports and pull requests are welcomed.
 
   - **Force all web pages to render in a dark theme** (default off). This option is equivalent to `chrome://flags/#enable-force-dark` in Chromium. Even if the web page does not support dark mode, this option will force a dark theme onto it.
 
+  - **Allow web pages to display HTML5 notification** (default off). This option grants notification permissions to all web pages.
+
 ## Installation
 
 Download the latest release `web-browser-extended.plasmoid`. Run `kpackagetool6 --type Plasma/Applet --install web-browser-extended.plasmoid` to install the applet.
