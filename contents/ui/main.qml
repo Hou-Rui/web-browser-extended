@@ -13,6 +13,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kirigami 2.20 as Kirigami
 import org.kde.plasma.plasmoid 2.0
+import org.kde.notification
 
 PlasmoidItem {
     id: root
@@ -214,10 +215,26 @@ PlasmoidItem {
                     forceDarkMode: plasmoid.configuration.forceDarkMode
                 }
 
+                Component {
+                    id: notificationComponent
+                    Notification {
+                        componentName: "plasma_workspace"
+                        eventId: "notification"
+                        iconName: plasmoid.configuration.icon || plasmoid.icon
+                        autoDelete: true
+                    }
+                }
+
                 profile: WebEngineProfile {
                     id: persistentProfile
                     storageName: plasmoid.configuration.persistentProfile
                     offTheRecord: !plasmoid.configuration.usePersistentProfile
+                    onPresentNotification: notification => {
+                        var nativeNotification = notificationComponent.createObject(parent);
+                        nativeNotification.title = notification.title;
+                        nativeNotification.text = notification.message;
+                        nativeNotification.sendEvent();
+                    }
                 }
 
                 readonly property bool useMinViewWidth : plasmoid.configuration.useMinViewWidth
@@ -232,6 +249,14 @@ PlasmoidItem {
                     function onConstantZoomFactorChanged() {updateZoomTimer.start()}
 
                     function onUseConstantZoomChanged() {updateZoomTimer.start()}
+                }
+
+                onPermissionRequested: permission => {
+                    if (permission.permissionType == WebEnginePermission.PermissionType.Notifications) {
+                        if (plasmoid.configuration.allowNotification) {
+                            permission.grant();
+                        }
+                    }
                 }
 
                 onLinkHovered: hoveredUrl => {

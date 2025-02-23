@@ -16,6 +16,7 @@ KCM.SimpleKCM {
     property alias cfg_persistentProfile: persistentProfile.text
     property alias cfg_canAccessClipboard: canAccessClipboard.checked
     property alias cfg_forceDarkMode: forceDarkMode.checked
+    property alias cfg_allowNotification: allowNotification.checked
 
     Kirigami.FormLayout {
         QQC2.ButtonGroup { id: defaultUrlGroup }
@@ -177,6 +178,11 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: forceDarkMode
             text: i18nc("@option:check", "Render web page using a dark theme")
+        }
+
+        QQC2.CheckBox {
+            id: allowNotification
+            text: i18nc("@option:check", "Allow HTML5 notification")
         }
     }
 }
