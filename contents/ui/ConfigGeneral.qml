@@ -17,6 +17,8 @@ KCM.SimpleKCM {
     property alias cfg_canAccessClipboard: canAccessClipboard.checked
     property alias cfg_forceDarkMode: forceDarkMode.checked
     property alias cfg_allowNotification: allowNotification.checked
+    property alias cfg_useCustomJS: useCustomJS.checked
+    property alias cfg_customJS: customJS.text
 
     Kirigami.FormLayout {
         QQC2.ButtonGroup { id: defaultUrlGroup }
@@ -183,6 +185,24 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: allowNotification
             text: i18nc("@option:check", "Allow HTML5 notification")
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
+        }
+
+        QQC2.CheckBox {
+            id: useCustomJS
+            Kirigami.FormData.label: i18nc("@title:group", "Custom JavaScript:")
+            text: i18nc("@option:check", "Run custom JavaScript on page load")
+        }
+
+        PlasmaComponents3.TextField {
+            id: customJS
+            Layout.fillWidth: true
+            placeholderText: i18nc("@info", "(()=>{ alert() })()")
+            enabled: useCustomJS.checked
+            Accessible.description: text.length > 0 ? text : i18nc("@info", "Custom JavaScript content")
         }
     }
 }
