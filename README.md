@@ -26,6 +26,10 @@ Bug reports and pull requests are welcomed.
 
   - **Allow web pages to display HTML5 notification** (default off). This option grants notification permissions to all web pages.
 
+  - **An option to inject custom JavaScript code into web pages** (default off). The code is executed after the web page has finished loading.
+
+- **Transparent background** (default off). This option is configurable in edit mode.
+
 ## Installation
 
 Download the latest release `web-browser-extended.plasmoid`. Run `kpackagetool6 --type Plasma/Applet --install web-browser-extended.plasmoid` to install the applet.
