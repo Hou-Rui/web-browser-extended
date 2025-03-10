@@ -59,7 +59,7 @@ PlasmoidItem {
         Layout.minimumWidth: root.switchWidth
         Layout.minimumHeight: root.switchHeight
 
-        
+        spacing: Kirigami.Units.smallSpacing
 
         RowLayout{
             visible: plasmoid.configuration.enableNavigationBar
