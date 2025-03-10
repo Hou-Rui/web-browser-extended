@@ -12,14 +12,16 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kirigami 2.20 as Kirigami
+import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 import org.kde.notification
 
 PlasmoidItem {
     id: root
-
     switchWidth: Kirigami.Units.gridUnit * 16
     switchHeight: Kirigami.Units.gridUnit * 23
+    
+    Plasmoid.backgroundHints: PlasmaCore.Types.ConfigurableBackground
 
     // Only exists because the default CompactRepresentation doesn't expose
     // a way to display arbitrary images; it can only show icons.
@@ -56,6 +58,8 @@ PlasmoidItem {
     fullRepresentation: ColumnLayout {
         Layout.minimumWidth: root.switchWidth
         Layout.minimumHeight: root.switchHeight
+
+        
 
         RowLayout{
             visible: plasmoid.configuration.enableNavigationBar
@@ -149,6 +153,7 @@ PlasmoidItem {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
+
             // TODO use contentsSize but that crashes, now mostly for some sane initial size
             Layout.preferredWidth: Kirigami.Units.gridUnit * 36
             Layout.preferredHeight: Kirigami.Units.gridUnit * 18
@@ -204,6 +209,7 @@ PlasmoidItem {
 
             WebEngineView {
                 id: webview
+                backgroundColor: "transparent"
                 anchors.fill: parent
                 onUrlChanged: plasmoid.configuration.url = url;
                 Component.onCompleted: {
@@ -277,8 +283,13 @@ PlasmoidItem {
                 onLoadingChanged: loadingInfo => {
                     if (loadingInfo.status === WebEngineLoadingInfo.LoadStartedStatus) {
                         infoButton.dismiss();
-                    } else if (loadingInfo.status === WebEngineLoadingInfo.LoadSucceededStatus && useMinViewWidth) {
-                        updateZoomTimer.start();
+                    } else if (loadingInfo.status === WebEngineLoadingInfo.LoadSucceededStatus) {
+                        if (useMinViewWidth) {
+                            updateZoomTimer.start();
+                        }
+                        if (plasmoid.configuration.useCustomJS){
+                            webview.runJavaScript(plasmoid.configuration.customJS, function(result) {} )
+                        }
                     }
                 }
 
@@ -310,6 +321,7 @@ PlasmoidItem {
                     }
                     Plasmoid.configuration.favIcon = icon.toString().slice(16 /* image://favicon/ */);
                 }
+
             }
 
             MouseArea {
