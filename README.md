@@ -24,7 +24,7 @@ Bug reports and pull requests are welcomed.
 
   - **Force all web pages to render in a dark theme** (default off). This option is equivalent to `chrome://flags/#enable-force-dark` in Chromium. Even if the web page does not support dark mode, this option will force a dark theme onto it.
 
-  - **Allow web pages to display HTML5 notification** (default off). This option grants notification permissions to all web pages.
+  - **Allow web pages to display HTML5 notification** (default off). This option grants notification permissions to all web pages. It also allows push service via  [Firebase Cloud Messaging (FCM)](https://firebase.google.com), a Google service.
 
   - **An option to inject custom JavaScript code into web pages** (default off). The code is executed after the web page has finished loading.
 
