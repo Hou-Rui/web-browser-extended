@@ -63,7 +63,7 @@ PlasmoidItem {
 
         RowLayout{
             Layout.fillWidth: true
-            Layout.maximumHeight: plasmoid.configuration.enableNavigationBar ? 32 : 0
+            Layout.maximumHeight: plasmoid.configuration.enableNavigationBar ? -1 : 0
             opacity: plasmoid.configuration.enableNavigationBar ? 1 : 0
             // WORKAROUND: "visible" makes webview font blurry
             PlasmaComponents3.Button {
