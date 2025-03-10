@@ -62,8 +62,10 @@ PlasmoidItem {
         
 
         RowLayout{
-            visible: plasmoid.configuration.enableNavigationBar
             Layout.fillWidth: true
+            Layout.maximumHeight: plasmoid.configuration.enableNavigationBar ? -1 : 0
+            opacity: plasmoid.configuration.enableNavigationBar ? 1 : 0
+            // WORKAROUND: "visible" makes webview font blurry
             PlasmaComponents3.Button {
                 icon.name: "go-previous-symbolic"
                 onClicked: webview.goBack()
