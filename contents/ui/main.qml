@@ -229,6 +229,7 @@ PlasmoidItem {
                     id: persistentProfile
                     storageName: plasmoid.configuration.persistentProfile
                     offTheRecord: !plasmoid.configuration.usePersistentProfile
+                    isPushServiceEnabled: plasmoid.configuration.allowNotification
                     onPresentNotification: notification => {
                         var nativeNotification = notificationComponent.createObject(parent);
                         nativeNotification.title = notification.title;
