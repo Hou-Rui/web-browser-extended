@@ -14,7 +14,7 @@ Bug reports and pull requests are welcomed.
 
   The official "Web Browser" applet use the "off the record" profile, which stores all browser data in memory. That means all login data are gone after reboot. This option fixes that and keeps all login data on disk.
 
-  The browser profiles created by this applet are not shared with regular web browser applications. However, multiple instances of this applet with the same profile name share the same browser profile.
+  The browser profiles created by this applet are not shared with regular web browser applications. If you are using multiple instances of this applet, **use different browser profiles for each instance**, or otherwise your cookies could be corrupted.
 
   Currently, a browser profile directory is located at `~/.local/share/plasmashell/QtWebEngine/<profile_name>`. It will **not** be deleted when not needed anymore (there is no way to delete a directory using only QML). You need to clean the abandoned profiles manually if you change the profile name or remove an instance of this applet.
 
