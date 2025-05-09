@@ -17,6 +17,8 @@ KCM.SimpleKCM {
     property alias cfg_canAccessClipboard: canAccessClipboard.checked
     property alias cfg_forceDarkMode: forceDarkMode.checked
     property alias cfg_allowNotification: allowNotification.checked
+    property alias cfg_allowMediaCapture: allowMediaCapture.checked
+    property alias cfg_allowDesktopCapture: allowDesktopCapture.checked
     property alias cfg_useCustomJS: useCustomJS.checked
     property alias cfg_customJS: customJS.text
 
@@ -167,6 +169,13 @@ KCM.SimpleKCM {
             Accessible.description: text.length > 0 ? text : i18nc("@info", "Persistent profile name")
         }
 
+        PlasmaComponents3.Label {
+            text: i18nc("@info", "If you have multiple instances of this applet, you are advised to give different profile names to each of them.")
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+            visible: usePersistentProfile.checked
+        }
+
         Item {
             Kirigami.FormData.isSection: true
         }
@@ -185,6 +194,16 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: allowNotification
             text: i18nc("@option:check", "Allow HTML5 notification")
+        }
+
+        QQC2.CheckBox {
+            id: allowMediaCapture
+            text: i18nc("@option:check", "Allow web page to capture media from microphone and camera")
+        }
+
+        QQC2.CheckBox {
+            id: allowDesktopCapture
+            text: i18nc("@option:check", "Allow web page to capture user screen and application audio")
         }
 
         Item {

@@ -259,9 +259,30 @@ PlasmoidItem {
                 }
 
                 onPermissionRequested: permission => {
-                    if (permission.permissionType == WebEnginePermission.PermissionType.Notifications) {
-                        if (plasmoid.configuration.allowNotification) {
-                            permission.grant();
+                    switch (permission.permissionType) {
+                        case WebEnginePermission.PermissionType.Notifications: {
+                            if (plasmoid.configuration.allowNotification) {
+                                permission.grant();
+                            }
+                            break;
+                        }
+                        case WebEnginePermission.PermissionType.MediaAudioCapture:
+                        case WebEnginePermission.PermissionType.MediaVideoCapture:
+                        case WebEnginePermission.PermissionType.MediaAudioVideoCapture: {
+                            if (plasmoid.configuration.allowMediaCapture) {
+                                permission.grant();
+                            }
+                            break;
+                        }
+                        case WebEnginePermission.PermissionType.DesktopVideoCapture:
+                        case WebEnginePermission.PermissionType.DesktopAudioVideoCapture: {
+                            if (plasmoid.configuration.allowDesktopCapture) {
+                                permission.grant();
+                            }
+                            break;
+                        }
+                        default: {
+                            permission.deny();
                         }
                     }
                 }
