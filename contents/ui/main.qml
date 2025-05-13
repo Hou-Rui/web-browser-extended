@@ -219,6 +219,7 @@ PlasmoidItem {
                 settings {
                     javascriptCanAccessClipboard: plasmoid.configuration.canAccessClipboard
                     forceDarkMode: plasmoid.configuration.forceDarkMode
+                    playbackRequiresUserGesture: !plasmoid.configuration.allowAutoplay
                 }
 
                 Component {

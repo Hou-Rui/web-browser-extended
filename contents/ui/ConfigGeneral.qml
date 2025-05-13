@@ -19,6 +19,7 @@ KCM.SimpleKCM {
     property alias cfg_allowNotification: allowNotification.checked
     property alias cfg_allowMediaCapture: allowMediaCapture.checked
     property alias cfg_allowDesktopCapture: allowDesktopCapture.checked
+    property alias cfg_allowAutoplay: allowAutoplay.checked
     property alias cfg_useCustomJS: useCustomJS.checked
     property alias cfg_customJS: customJS.text
 
@@ -204,6 +205,11 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: allowDesktopCapture
             text: i18nc("@option:check", "Allow web page to capture user screen and application audio")
+        }
+
+        QQC2.CheckBox {
+            id: allowAutoplay
+            text: i18nc("@option:check", "Allow media to automatically play on web page")
         }
 
         Item {
