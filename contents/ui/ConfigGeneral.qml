@@ -156,10 +156,14 @@ KCM.SimpleKCM {
             Kirigami.FormData.isSection: true
         }
 
-        QQC2.CheckBox {
-            id: usePersistentProfile
-            Kirigami.FormData.label: i18nc("@title:group", "Persistent Profile:")
-            text: i18nc("@option:check", "Use a persistent browser profile:")
+        RowLayout {
+            Kirigami.FormData.label: i18nc("@title:group", "Browser Settings:")
+
+            QQC2.CheckBox {
+                id: usePersistentProfile
+                Kirigami.FormData.label: i18nc("@title:group", "Persistent Profile:")
+                text: i18nc("@option:check", "Use a persistent browser profile:")
+            }
         }
 
         PlasmaComponents3.TextField {

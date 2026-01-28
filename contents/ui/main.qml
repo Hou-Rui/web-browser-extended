@@ -10,18 +10,21 @@ import QtQuick
 import QtWebEngine
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 3.0 as PlasmaComponents3
+import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kirigami 2.20 as Kirigami
-import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
-import org.kde.notification
 
 PlasmoidItem {
     id: root
-    switchWidth: Kirigami.Units.gridUnit * 16
-    switchHeight: Kirigami.Units.gridUnit * 23
-    
-    Plasmoid.backgroundHints: PlasmaCore.Types.ConfigurableBackground
+
+    readonly property bool inPanel: [PlasmaCore.Types.TopEdge, PlasmaCore.Types.RightEdge, PlasmaCore.Types.BottomEdge, PlasmaCore.Types.LeftEdge].includes(Plasmoid.location)
+
+    // Web Browser in ultrawide panel freezes Plasma hard; even preferrredRepresentation is not enough
+    preferredRepresentation: inPanel ? compactRepresentation : fullRepresentation
+    switchWidth: inPanel ? Number.POSITIVE_INFINITY : Kirigami.Units.gridUnit * 16
+    switchHeight: inPanel ? Number.POSITIVE_INFINITY : Kirigami.Units.gridUnit * 23
+    Plasmoid.icon: "internet-web-browser-symbolic"
 
     // Only exists because the default CompactRepresentation doesn't expose
     // a way to display arbitrary images; it can only show icons.
@@ -70,6 +73,9 @@ PlasmoidItem {
                 enabled: webview.canGoBack
                 display: PlasmaComponents3.AbstractButton.IconOnly
                 text: i18nc("@action:button", "Go Back")
+                PlasmaComponents3.ToolTip.visible: hovered
+                PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+                PlasmaComponents3.ToolTip.text: text
             }
             PlasmaComponents3.Button {
                 icon.name: "go-next-symbolic"
@@ -77,6 +83,9 @@ PlasmoidItem {
                 enabled: webview.canGoForward
                 display: PlasmaComponents3.AbstractButton.IconOnly
                 text: i18nc("@action:button", "Go Forward")
+                PlasmaComponents3.ToolTip.visible: hovered
+                PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+                PlasmaComponents3.ToolTip.text: text
             }
             PlasmaComponents3.Button {
                 id: goHomeButton
@@ -85,9 +94,9 @@ PlasmoidItem {
                 display: PlasmaComponents3.AbstractButton.IconOnly
                 visible: plasmoid.configuration.useDefaultUrl
                 text: i18nc("@action:button", "Go Home")
-                PlasmaComponents3.ToolTip {
-                    text: goHomeButton.text
-                }
+                PlasmaComponents3.ToolTip.visible: hovered
+                PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+                PlasmaComponents3.ToolTip.text: text
                 Accessible.name: goHomeButton.text
                 Accessible.description: i18n("Open Default URL")
             }
@@ -124,6 +133,10 @@ PlasmoidItem {
 
                 onClicked: cb();
 
+                PlasmaComponents3.ToolTip.visible: hovered
+                PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+                PlasmaComponents3.ToolTip.text: text
+
                 PlasmaComponents3.ToolTip {
                     id: tooltip
                 }
@@ -146,13 +159,15 @@ PlasmoidItem {
                 icon.name: webview.loading ? "process-stop-symbolic" : "view-refresh-symbolic"
                 text: webview.loading ? i18nc("@action:button", "Stop Loading This Page") : i18nc("@action:button", "Reload This Page")
                 onClicked: webview.loading ? webview.stop() : webview.reload()
+                PlasmaComponents3.ToolTip.visible: hovered
+                PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+                PlasmaComponents3.ToolTip.text: text
             }
         }
 
         Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
-
 
             // TODO use contentsSize but that crashes, now mostly for some sane initial size
             Layout.preferredWidth: Kirigami.Units.gridUnit * 36
@@ -343,7 +358,6 @@ PlasmoidItem {
                     }
                     Plasmoid.configuration.favIcon = icon.toString().slice(16 /* image://favicon/ */);
                 }
-
             }
 
             MouseArea {
