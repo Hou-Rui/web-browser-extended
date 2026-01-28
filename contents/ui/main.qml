@@ -320,6 +320,14 @@ PlasmoidItem {
                     }
                 }
 
+                onCertificateError: error => {
+                    if (plasmoid.configuration.ignoreCertificateErrors) {
+                        error.acceptCertificate();
+                    } else {
+                        error.rejectCertificate();
+                    }
+                }
+
                 onLinkHovered: hoveredUrl => {
                     if (hoveredUrl.toString() !== "") {
                         mouseArea.cursorShape = Qt.PointingHandCursor;

@@ -20,6 +20,7 @@ KCM.SimpleKCM {
     property alias cfg_allowMediaCapture: allowMediaCapture.checked
     property alias cfg_allowDesktopCapture: allowDesktopCapture.checked
     property alias cfg_allowAutoplay: allowAutoplay.checked
+    property alias cfg_ignoreCertificateErrors: ignoreCertificateErrors.checked
     property alias cfg_useCustomJS: useCustomJS.checked
     property alias cfg_customJS: customJS.text
 
@@ -214,6 +215,11 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: allowAutoplay
             text: i18nc("@option:check", "Allow media to automatically play on web page")
+        }
+
+        QQC2.CheckBox {
+            id: ignoreCertificateErrors
+            text: i18nc("@option:check", "Ignore certificate errors")
         }
 
         Item {
