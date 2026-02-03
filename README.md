@@ -32,6 +32,8 @@ Bug reports and pull requests are welcomed.
 
   - **An option to inject custom JavaScript code into web pages** (default off). The code is executed after the web page has finished loading.
 
+  - **An option to ignore certificate errors** (default off). Note that this is highly insecure so only enable this option when you absolutely trust the website (for example, a website self-signed by yourself).
+
 - **Transparent background** (default off). This option is configurable in edit mode.
 
 ## Installation
