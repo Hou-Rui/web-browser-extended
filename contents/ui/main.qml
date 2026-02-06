@@ -66,7 +66,7 @@ PlasmoidItem {
 
         spacing: Kirigami.Units.smallSpacing
 
-        RowLayout{
+        RowLayout {
             visible: plasmoid.configuration.enableNavigationBar
             Layout.fillWidth: true
             PlasmaComponents3.Button {
@@ -94,7 +94,7 @@ PlasmoidItem {
                 icon.name: "go-home-symbolic"
                 onClicked: webview.url = plasmoid.configuration.defaultUrl
                 display: PlasmaComponents3.AbstractButton.IconOnly
-                visible: plasmoid.configuration.useDefaultUrl
+                // visible: plasmoid.configuration.useDefaultUrl // Always show home button
                 text: i18nc("@action:button", "Go Home")
                 PlasmaComponents3.ToolTip.visible: hovered || activeFocus
                 PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
@@ -106,10 +106,27 @@ PlasmoidItem {
                 Layout.fillWidth: true
                 onAccepted: {
                     var url = text;
-                    if (url.indexOf(":/") < 0) {
-                        url = "http://" + url;
+                    // Heuristic to detect if input is URL or Search Query
+                    var isUrl = false;
+
+                    // Check for protocol or common URL indicators
+                    if (url.indexOf("://") >= 0 || url.indexOf("about:") === 0) {
+                        isUrl = true;
+                    } else if (url.indexOf(" ") < 0 && url.indexOf(".") >= 0) {
+                        // No spaces and contains a dot (e.g. google.com, 192.168.1.1)
+                        // This might catch "file.txt" as a URL, which is acceptable behavior (likely to fail loading but better than searching maybe?)
+                        // Actually, many search queries have dots (e.g. "ver 2.0").
+                        // But usually "google.com" is what people type.
+                        // We'll stick to: No spaces + Has Dot -> assume URL.
+                        isUrl = true;
+                        url = "https://" + url;
                     }
-                    webview.url = url;
+
+                    if (isUrl) {
+                        webview.url = url;
+                    } else {
+                        webview.url = "https://www.google.com/search?q=" + encodeURIComponent(url);
+                    }
                 }
                 onActiveFocusChanged: {
                     if (activeFocus) {
@@ -133,7 +150,7 @@ PlasmoidItem {
                 Layout.leftMargin: -parent.spacing
                 Layout.rightMargin: -parent.spacing
 
-                onClicked: cb();
+                onClicked: cb()
 
                 PlasmaComponents3.ToolTip.visible: hovered
                 PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
@@ -179,7 +196,6 @@ PlasmoidItem {
                 PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
                 PlasmaComponents3.ToolTip.text: text
             }
-
         }
 
         Item {
@@ -228,7 +244,7 @@ PlasmoidItem {
 
                 PlasmaExtras.MenuItem {
                     text: i18nc("@action:inmenu", "Open Link in Browser")
-                    icon:  "internet-web-browser-symbolic"
+                    icon: "internet-web-browser-symbolic"
                     onClicked: Qt.openUrlExternally(linkContextMenu.link)
                 }
 
@@ -243,7 +259,7 @@ PlasmoidItem {
                 id: webview
                 backgroundColor: "transparent"
                 anchors.fill: parent
-                onUrlChanged: plasmoid.configuration.url = url;
+                onUrlChanged: plasmoid.configuration.url = url
                 Component.onCompleted: {
                     url = plasmoid.configuration.useDefaultUrl ? plasmoid.configuration.defaultUrl : plasmoid.configuration.url;
                 }
@@ -277,44 +293,56 @@ PlasmoidItem {
                     }
                 }
 
-                readonly property bool useMinViewWidth : plasmoid.configuration.useMinViewWidth
+                readonly property bool useMinViewWidth: plasmoid.configuration.useMinViewWidth
 
                 Connections {
                     target: plasmoid.configuration
 
-                    function onMinViewWidthChanged() {updateZoomTimer.start()}
+                    function onMinViewWidthChanged() {
+                        updateZoomTimer.start();
+                    }
 
-                    function onUseMinViewWidthChanged() {updateZoomTimer.start()}
+                    function onUseMinViewWidthChanged() {
+                        updateZoomTimer.start();
+                    }
 
-                    function onConstantZoomFactorChanged() {updateZoomTimer.start()}
+                    function onConstantZoomFactorChanged() {
+                        updateZoomTimer.start();
+                    }
 
-                    function onUseConstantZoomChanged() {updateZoomTimer.start()}
+                    function onUseConstantZoomChanged() {
+                        updateZoomTimer.start();
+                    }
                 }
 
                 onPermissionRequested: permission => {
                     switch (permission.permissionType) {
-                        case WebEnginePermission.PermissionType.Notifications: {
+                    case WebEnginePermission.PermissionType.Notifications:
+                        {
                             if (plasmoid.configuration.allowNotification) {
                                 permission.grant();
                             }
                             break;
                         }
-                        case WebEnginePermission.PermissionType.MediaAudioCapture:
-                        case WebEnginePermission.PermissionType.MediaVideoCapture:
-                        case WebEnginePermission.PermissionType.MediaAudioVideoCapture: {
+                    case WebEnginePermission.PermissionType.MediaAudioCapture:
+                    case WebEnginePermission.PermissionType.MediaVideoCapture:
+                    case WebEnginePermission.PermissionType.MediaAudioVideoCapture:
+                        {
                             if (plasmoid.configuration.allowMediaCapture) {
                                 permission.grant();
                             }
                             break;
                         }
-                        case WebEnginePermission.PermissionType.DesktopVideoCapture:
-                        case WebEnginePermission.PermissionType.DesktopAudioVideoCapture: {
+                    case WebEnginePermission.PermissionType.DesktopVideoCapture:
+                    case WebEnginePermission.PermissionType.DesktopAudioVideoCapture:
+                        {
                             if (plasmoid.configuration.allowDesktopCapture) {
                                 permission.grant();
                             }
                             break;
                         }
-                        default: {
+                    default:
+                        {
                             permission.deny();
                         }
                     }
@@ -338,7 +366,7 @@ PlasmoidItem {
 
                 onWidthChanged: {
                     if (useMinViewWidth) {
-                        updateZoomTimer.start()
+                        updateZoomTimer.start();
                     }
                 }
 
@@ -349,8 +377,8 @@ PlasmoidItem {
                         if (useMinViewWidth) {
                             updateZoomTimer.start();
                         }
-                        if (plasmoid.configuration.useCustomJS){
-                            webview.runJavaScript(plasmoid.configuration.customJS, function(result) {} )
+                        if (plasmoid.configuration.useCustomJS) {
+                            webview.runJavaScript(plasmoid.configuration.customJS, function (result) {});
                         }
                     }
                 }
@@ -369,8 +397,7 @@ PlasmoidItem {
                     if (request.userInitiated) {
                         Qt.openUrlExternally(url);
                     } else {
-                        infoButton.show(i18nc("An unwanted popup was blocked", "Popup blocked"), "document-close-symbolic",
-                                        i18n("Click here to open the following blocked popup:\n%1", url), function () {
+                        infoButton.show(i18nc("An unwanted popup was blocked", "Popup blocked"), "document-close-symbolic", i18n("Click here to open the following blocked popup:\n%1", url), function () {
                             Qt.openUrlExternally(url);
                             infoButton.dismiss();
                         });
