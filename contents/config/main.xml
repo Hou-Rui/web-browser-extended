@@ -75,5 +75,9 @@
     <entry name="customJS" type="String">
       <default></default>
     </entry>
+    <entry name="hideScrollBar" type="Bool">
+      <label>Hide Scrollbar</label>
+      <default>false</default>
+    </entry>
   </group>
 </kcfg>

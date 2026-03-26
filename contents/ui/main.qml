@@ -352,6 +352,12 @@ PlasmoidItem {
                         if (plasmoid.configuration.useCustomJS){
                             webview.runJavaScript(plasmoid.configuration.customJS, function(result) {} )
                         }
+                        //Hide scroll bar
+                        if (plasmoid.configuration.hideScrollBar) {
+                            webview.runJavaScript('document.documentElement.style.overflow = "hidden"; document.body.style.overflow = "hidden";', function(result) {} )
+                        } else {
+                            webview.runJavaScript('document.documentElement.style.overflow = null; document.body.style.overflow = null;', function(result) {} )
+                        }
                     }
                 }
 
