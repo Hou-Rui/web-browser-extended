@@ -15,6 +15,7 @@ KCM.SimpleKCM {
     property alias cfg_usePersistentProfile: usePersistentProfile.checked
     property alias cfg_persistentProfile: persistentProfile.text
     property alias cfg_canAccessClipboard: canAccessClipboard.checked
+    property alias cfg_hideScrollBar: hideScrollBar.checked
     property alias cfg_forceDarkMode: forceDarkMode.checked
     property alias cfg_allowNotification: allowNotification.checked
     property alias cfg_allowMediaCapture: allowMediaCapture.checked
@@ -190,6 +191,11 @@ KCM.SimpleKCM {
             id: canAccessClipboard
             Kirigami.FormData.label: i18nc("@title:group", "Web Settings:")
             text: i18nc("@option:check", "Allow JavaScript to access system clipboard")
+        }
+
+        QQC2.CheckBox {
+            id: hideScrollBar
+            text: i18nc("@option:check", "Hide Scrollbar")
         }
 
         QQC2.CheckBox {
