@@ -24,6 +24,9 @@ KCM.SimpleKCM {
     property alias cfg_useCustomJS: useCustomJS.checked
     property alias cfg_customJS: customJS.text
 
+    property alias cfg_allowClientCertificates: allowClientCertificates.checked
+    property alias cfg_clientCert: clientCert.text
+
     Kirigami.FormLayout {
         QQC2.ButtonGroup { id: defaultUrlGroup }
 
@@ -238,6 +241,20 @@ KCM.SimpleKCM {
             placeholderText: i18nc("@info", "(()=>{ alert() })()")
             enabled: useCustomJS.checked
             Accessible.description: text.length > 0 ? text : i18nc("@info", "Custom JavaScript content")
+        }
+
+        QQC2.CheckBox {
+            id: allowClientCertificates
+            Kirigami.FormData.label: i18nc("@title:group", "Client certificate:")
+            text: i18nc("@option:check", "Allow web page to request a client certificate")
+        }
+
+        PlasmaComponents3.TextField {
+            id: clientCert
+            Layout.fillWidth: true
+            placeholderText: i18nc("@info", "Company, Inc.|ThisPC")
+            enabled: allowClientCertificates.checked
+            Accessible.description: text.length > 0 ? text : i18nc("@info", "Certificate name")
         }
     }
 }
