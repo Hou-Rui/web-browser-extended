@@ -328,6 +328,28 @@ PlasmoidItem {
                     }
                 }
 
+                onSelectClientCertificate: clientCertificateSelection => {
+                    console.log("Got cert prompt")
+                    if (!plasmoid.configuration.allowClientCertificates) {
+                        clientCertificateSelection.selectNone();
+                        return;
+                    }
+
+                    clientCertificateSelection.certificates.forEach(e => {
+                        console.log(`${e.issuer}|${e.subject}`);
+                    })
+
+                    var idx = clientCertificateSelection.certificates.findIndex(e => `${e.issuer}|${e.subject}` == plasmoid.configuration.clientCert)
+                    console.log("selected cert: " + idx);
+                    if (idx == -1)
+                    {
+                        clientCertificateSelection.selectNone();
+                        return;
+                    }
+
+                    clientCertificateSelection.select(idx);
+                }
+
                 onLinkHovered: hoveredUrl => {
                     if (hoveredUrl.toString() !== "") {
                         mouseArea.cursorShape = Qt.PointingHandCursor;

@@ -75,5 +75,11 @@
     <entry name="customJS" type="String">
       <default></default>
     </entry>
+    <entry name="allowClientCertificates" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="clientCert" type="String">
+      <default></default>
+    </entry>
   </group>
 </kcfg>
